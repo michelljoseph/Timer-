@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Farro:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<!-- <script src="timer.js"></script> -->
+</head>
+<body class="pageBackground">
+
+
+    <h1 class = "heading1" > Timer </h1>
+    <div class = "d-flex" id = "clockdiv"> 
+        <div>
+            <span class = "days timer-box">  </span>
+            <div class = "heading1 heading-padding">
+                Days
+            </div>
+        </div>
+        <div>
+            <span class = "timer-box hours">  </span>
+            <div class = "heading1 heading-padding">
+               Hrs
+            </div>
+        </div>
+        <div>
+            <span  class = "timer-box minutes">  </span>
+            <div class = "heading1 heading-padding">
+                Mins
+            </div>
+        </div>
+        <div>
+            <span class = "timer-box seconds">  </span>
+            <div class = "heading1 heading-padding">
+                Secs
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getTimeRemaining(endtime) {
+    const total = Date.parse(endtime) - Date.parse(new Date());
+    const seconds = Math.floor((total / 1000) % 60);
+    const minutes = Math.floor((total / 1000 / 60) % 60);
+    const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+    const days = Math.floor(total / (1000 * 60 * 60 * 24));
+   
+    return {
+      total,
+      days,
+      hours,
+      minutes,
+      seconds
+    };
+  }
+  
+  function initializeClock(id, endtime) {
+    const clock = document.getElementById(id);
+    const daysSpan = clock.querySelector('.days');
+    const hoursSpan = clock.querySelector('.hours');
+    const minutesSpan = clock.querySelector('.minutes');
+    const secondsSpan = clock.querySelector('.seconds');
+  
+    function updateClock() {
+      const t = getTimeRemaining(endtime);
+  
+      daysSpan.innerHTML = t.days;
+      hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+      minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+      secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+  
+      if (t.total <= 0) {
+        clearInterval(timeinterval);
+      }
+    }
+  
+    updateClock();
+    const timeinterval = setInterval(updateClock, 1000);
+  }
+  
+  const deadline = new Date(Date.parse(new Date()) + 1 * 5 * 60 * 60 * 1000);
+  initializeClock('clockdiv', deadline);
+  
+    </script>
+</body>
+</html>
